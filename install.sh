@@ -47,6 +47,7 @@ PACKAGES=(
 	jq
 	libjpeg
 	markdown
+    mas
 	npm
 	pkg-config
 	postgresql
@@ -77,7 +78,9 @@ brew install caskroom/cask/brew-cask
 
 CASK=(
     adobe-creative-cloud
+    alfred
     canon-eos-utility
+    cheatsheet
     docker
     firefox
     google-chrome
@@ -87,11 +90,22 @@ CASK=(
     macvim
     malwarebytes
     spotify
+    transmission
     vagrant
     vagrant-manager
     virtualbox
     visual-studio-code
     vlc
+
+    qlcolorcode
+    qlstephen
+    qlmarkdown
+    quicklook-json
+    qlprettypatch
+    quicklook-csv
+    betterzip
+    webquicklook
+    suspicious-package
 )
 
 echo "Installing cask apps..."
