@@ -52,6 +52,7 @@ PACKAGES=(
 	pkg-config
 	postgresql
 	python
+    reattach-to-user-namespace
     ruby
     rust
 	ssh-copy-id
@@ -139,3 +140,14 @@ NPM_PACKAGES=(
     safe-rm
 )
 npm install ${NPM_PACKAGES[@]}
+
+
+echo "Cloning Prezto..."
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+
+echo "Linking Prezto files..."
+setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+done
+rm ~/.zpreztorc
