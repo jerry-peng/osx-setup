@@ -15,3 +15,14 @@ read -p "Git Email: " email
 git config --global user.name "$name"
 git config --global user.email "$email"
 git config --global core.excludesfile '~/.gitignore'
+
+echo "Installing tmux plugins..."
+# Start new server and session without attaching
+tmux start-server
+tmux new-session -d
+# Source tmux conf
+tmux source ~/.tmux.conf
+# Install the plugins
+~/.tmux/plugins/tpm/scripts/install_plugins.sh
+# Kill server
+tmux kill-server
