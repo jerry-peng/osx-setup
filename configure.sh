@@ -26,3 +26,8 @@ tmux source ~/.tmux.conf
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 # Kill server
 tmux kill-server
+
+source ~/.zshrc
+
+echo "Installing vim plugins..."
+vim + 'PlugInstall --sync' +qa
