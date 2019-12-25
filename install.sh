@@ -16,7 +16,7 @@ if test ! $(which brew); then
 fi
 
 # Update Homebrew recipes
-brew updat
+brew update
 
 # Install GNU core utilities (those that come with OS X are outdated)
 brew tap homebrew/dupes
