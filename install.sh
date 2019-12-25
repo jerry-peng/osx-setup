@@ -38,6 +38,7 @@ PACKAGES=(
 	autoconf
 	automake
 	boot2docker
+    fzf
 	gettext
 	git
 	graphviz
@@ -54,7 +55,7 @@ PACKAGES=(
 	python
     reattach-to-user-namespace
     ruby
-    rust
+    rustup-init
 	ssh-copy-id
 	the_silver_searcher
 	tmux
@@ -141,6 +142,9 @@ NPM_PACKAGES=(
 )
 npm install ${NPM_PACKAGES[@]}
 
+echo "Install nightly rust..."
+osascript -e 'display notification "Interact with rustup prompt" sound name "Submarine"'
+rustup-init install nightly
 
 echo "Cloning Prezto..."
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
