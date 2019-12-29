@@ -38,31 +38,32 @@ PACKAGES=(
 	autoconf
 	automake
 	boot2docker
-    fzf
+  ctags-exuberant
+  fzf
 	gettext
 	git
 	graphviz
-    go
-    heroku
+  go
+  heroku
 	hub
 	jq
 	libjpeg
 	markdown
-    mas
+  mas
 	npm
 	pkg-config
 	postgresql
 	python
-    reattach-to-user-namespace
-    ruby
-    rustup-init
+  reattach-to-user-namespace
+  ruby
+  rustup-init
 	ssh-copy-id
 	the_silver_searcher
 	tmux
 	tree
 	vim
 	wget
-    zsh
+  zsh
 	# ffmpeg
 	# imagemagick
 	# libmemcached 
@@ -79,35 +80,35 @@ echo "Installing cask..."
 brew install caskroom/cask/brew-cask
 
 CASK=(
-    adobe-creative-cloud
-    alfred
-    canon-eos-utility
-    cheatsheet
-    docker
-    firefox
-    google-chrome
-    haskell-for-mac
-    iterm2
-    mactex
-    macvim
-    malwarebytes
-    spotify
-    transmission
-    vagrant
-    vagrant-manager
-    virtualbox
-    visual-studio-code
-    vlc
+  adobe-creative-cloud
+  alfred
+  canon-eos-utility
+  cheatsheet
+  docker
+  firefox
+  google-chrome
+  haskell-for-mac
+  iterm2
+  mactex
+  macvim
+  malwarebytes
+  spotify
+  transmission
+  vagrant
+  vagrant-manager
+  virtualbox
+  visual-studio-code
+  vlc
 
-    qlcolorcode
-    qlstephen
-    qlmarkdown
-    quicklook-json
-    qlprettypatch
-    quicklook-csv
-    betterzip
-    webquicklook
-    suspicious-package
+  qlcolorcode
+  qlstephen
+  qlmarkdown
+  quicklook-json
+  qlprettypatch
+  quicklook-csv
+  betterzip
+  webquicklook
+  suspicious-package
 )
 
 echo "Installing cask apps..."
@@ -116,34 +117,34 @@ brew cask install ${CASK[@]}
 echo "Installing fonts..."
 brew tap caskroom/fonts
 FONTS=(
-    font-cascadia
-    font-fira-code
-    font-fontawesome
-    font-inconsolata
-    font-input
-    font-montserrat
-    font-roboto
-    font-source-code-pro
-    font-source-sans-pro
+  font-cascadia
+  font-fira-code
+  font-fontawesome
+  font-inconsolata
+  font-input
+  font-montserrat
+  font-roboto
+  font-source-code-pro
+  font-source-sans-pro
 )
 
 brew cask Install ${FONT[@]}
 
 echo "Installing Python packages..."
 PYTHON_PACKAGES=(
-    pipenv
+  pipenv
 )
 sudo pip install ${PYTHON_PACKAGES[@]}
 
 echo "Installing global npm packages..."
 NPM_PACKAGES=(
-    puppeteer
-    safe-rm
+  puppeteer
+  safe-rm
 )
 npm install ${NPM_PACKAGES[@]}
 
 echo "Install nightly rust..."
-osascript -e 'display notification "Interact with rustup prompt" sound name "Submarine"'
+osascript -e 'display notification "rustup interactive prompt" sound name "Submarine"'
 rustup-init install nightly
 
 echo "Cloning Prezto..."
@@ -152,7 +153,7 @@ git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$H
 echo "Linking Prezto files..."
 setopt EXTENDED_GLOB
 for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 rm ~/.zpreztorc
 
@@ -161,4 +162,4 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 echo "Cloning vim-plug..."
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
