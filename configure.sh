@@ -1,20 +1,15 @@
-echo "Configuring OSX..."
+#!/bin/zsh
+
 # Credit: https://github.com/codeinthehole
 # Resources:
 # https://gist.github.com/codeinthehole/26b37efa67041e1307db
 
-# Set fast key repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 0
+echo "Configuring..."
 
-# Show filename extensions by default
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
-echo "Configuring git..."
-read -p "Git Name: " name
-read -p "Git Email: " email
-git config --global user.name "$name"
-git config --global user.email "$email"
-git config --global core.excludesfile '~/.gitignore'
+# Disabling write permissions and updating owner of zshr directories since insecure directories
+echo "Disable write permission, and update owner for zsh directory"
+sudo chmod -R 755 /usr/local/share/zsh
+sudo chown -R root:staff /usr/local/share/zsh
 
 echo "Installing tmux plugins..."
 # Start new server and session without attaching

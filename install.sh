@@ -1,123 +1,164 @@
-#!/usr/local/bin/zsh
+#!/bin/zsh
+
 # Credit: https://github.com/codeinthehole
 # Resources:
 # https://gist.github.com/codeinthehole/26b37efa67041e1307db
 # https://sourabhbajaj.com/mac-setup/Homebrew/Cask.html
+# https://www.topbug.net/blog/2013/04/14/install-and-use-gnu-command-line-tools-in-mac-os-x/
 
-"Starting installing"
+echo "Installing packages and applications"
 
-# Install Xcode command line tool
-xcode-select --install
-
-# Install Homebrew if not installed
-if test ! $(which brew); then
-    echo "Installing homebrew..."
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+if ! type "brew"
+then
+  echo "Installing homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# Update Homebrew recipes
+echo "Updating Homebrew recipes"
 brew update
 
-# Install GNU core utilities (those that come with OS X are outdated)
-brew tap homebrew/dupes
-brew install coreutils
-brew install gnu-sed
-brew install gnu-tar
-brew install gnu-indent
-brew install gnu-which
-brew install gnu-grep
-
-# Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
-brew install findutils
-
-# Install Bash 5
-brew install bash
+PACKAGES=(
+  binutils
+  coreutils
+  diffutils
+  findutils
+  gawk
+  gnu-indent
+  gnu-sed
+  gnu-tar
+  gnu-which
+  gnutls
+  grep
+  gzip
+  screen
+  watch
+  wdiff
+  wget
+)
+echo "Installing GNU commands which replace OSX's BSD version with Linux version"
+for package in ${PACKAGES[@]}; do
+   brew install $package
+done
 
 PACKAGES=(
-	ack
-	autoconf
-	automake
-	boot2docker
-  ctags-exuberant
-  fzf
-	gettext
-	git
-	graphviz
-  go
-  heroku
-	hub
-	jq
-	libjpeg
-	markdown
-  mas
-	npm
-	pkg-config
-	postgresql
-	python
-  reattach-to-user-namespace
-  ruby
-  rustup-init
-	ssh-copy-id
-	the_silver_searcher
-	tmux
-	tree
-	vim
-	wget
-  zsh
-	# ffmpeg
-	# imagemagick
-	# libmemcached 
-	# memcached
+  bash
+  emacs
+  gdb
+  gpatch
+  less
+  m4
+  make
+  nano
 )
+echo "Installing GNU commands which update OSX's default version"
+for package in ${PACKAGES[@]}; do
+  brew install $package
+done
 
-echo "Installing packages..."
-brew install ${PACKAGES[@]}
+PACKAGES=(
+  ghc
+  git
+  go
+  haskell-stack
+  kotlin
+  neovim
+  openjdk
+  perl
+  python
+  ruby
+  rustup
+  tmux
+  vim
+  zsh
+)
+echo "Installing languages and basic programming utilities"
+for package in ${PACKAGES[@]}; do
+  brew install $package
+done
+
+echo "Installing rustc through rustup-init... (choose express installation)"
+rustup-init
+
+PACKAGES=(
+  autoconf
+  automake
+  ffmpeg
+  file-formula
+  fzf
+  gettext
+  graphviz
+  imagemagick
+  hub
+  jpeg
+  jq
+  npm
+  openssh
+  pkg-config
+  reattach-to-user-namespace
+  ripgrep
+  rsync
+  ssh-copy-id
+  svn
+  tree
+  universal-ctags
+  unzip
+)
+echo "Installing misc utilities"
+for package in ${PACKAGES[@]}; do
+  brew install $package
+done
 
 echo "Cleaning up..."
 brew cleanup
 
-echo "Installing cask..."
-brew install caskroom/cask/brew-cask
-
-CASK=(
+CASKS=(
   adobe-creative-cloud
-  alfred
-  canon-eos-utility
   cheatsheet
   docker
+  expressvpn
   firefox
   google-chrome
-  haskell-for-mac
   iterm2
-  mactex
-  macvim
   malwarebytes
+  qbittorrent
   spotify
-  transmission
   vagrant
   vagrant-manager
   virtualbox
   visual-studio-code
   vlc
 
-  qlcolorcode
-  qlstephen
-  qlmarkdown
-  quicklook-json
-  qlprettypatch
-  quicklook-csv
-  betterzip
-  webquicklook
-  suspicious-package
 )
 
+echo "Installing cask packages..."
+for cask in ${CASKS[@]}; do
+  brew install --cask $cask
+done
+
+QL_CASKS=(
+  apparency
+  betterzip
+  qlcolorcode
+  qlimagesize
+  qlmarkdown
+  qlstephen
+  qlprettypatch
+  qlvideo
+  quicklookase
+  quicklook-csv
+  quicklook-json
+  suspicious-package
+  webquicklook
+)
 echo "Installing cask apps..."
-brew cask install ${CASK[@]}
+for cask in ${QL_CASKS[@]}; do
+  brew install --cask $cask
+done
 
 echo "Installing fonts..."
-brew tap caskroom/fonts
+brew tap homebrew/cask-fonts
 FONTS=(
-  font-cascadia
+  font-cascadia-code-pl
   font-fira-code
   font-fontawesome
   font-inconsolata
@@ -128,24 +169,25 @@ FONTS=(
   font-source-sans-pro
 )
 
-brew cask Install ${FONT[@]}
+for font in ${FONTS[@]}; do
+  brew Install $font
+done
 
 echo "Installing Python packages..."
+sudo python3 -m pip install --upgrade pip
 PYTHON_PACKAGES=(
   pipenv
 )
-sudo pip install ${PYTHON_PACKAGES[@]}
+for package in ${PYTHON_PACKAGES[@]}; do
+  pip install $package
+done
 
-echo "Installing global npm packages..."
-NPM_PACKAGES=(
-  puppeteer
-  safe-rm
-)
-npm install ${NPM_PACKAGES[@]}
-
-echo "Install nightly rust..."
-osascript -e 'display notification "rustup interactive prompt" sound name "Submarine"'
-rustup-init install nightly
+# echo "Installing global npm packages..."
+# NPM_PACKAGES=(
+# )
+# for package in ${NPM_PACKAGES[@]}; do
+#   npm install $package
+# done
 
 echo "Cloning Prezto..."
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
